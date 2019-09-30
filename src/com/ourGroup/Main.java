@@ -9,10 +9,10 @@ Includes adjustable difficulty
  */
 
 package com.ourGroup;
+
 import java.util.*;//using the random class
 
-public class Main
-{
+public class Main {
 
     //Global Variables:
     public static int totalGuesses;
@@ -24,8 +24,7 @@ public class Main
 
 
     //runs guessing game, sets up difficulty, displays stats when done
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         System.out.println("Hello, and welcome to the guessing game!" +
                 "\nIn this game, I'll think of a number in a range, say, 1 to 100," +
                 "\nand you can try to guess it." +
@@ -50,9 +49,7 @@ public class Main
             System.out.println("Average Guesses per game: " + ((totalGuesses * 10) / totalGames) / 10.0);
             if (bestGuesses != -1) {//if the player won at least one game
                 System.out.println("Your best game took only " + bestGuesses + " guesses");
-            }
-            else
-                {
+            } else {
                 System.out.println("You never won a game, so there isn't a best guesses number.")
             }
 
@@ -65,15 +62,14 @@ public class Main
     {
         System.out.println("\nWould you like to play with a guessing range that is Easy, Medium, or Hard?");
         String difficultySelection = getInput("Easy", "Medium", "Hard");
-        switch(difficultySelection)
-        {
+        switch (difficultySelection) {
             case "Easy":
                 minOfRange = 1;
                 maxOfRange = 50;
                 break;
             case "Medium"
                 minOfRange = 1;
-            maxOfRange = 100;
+                maxOfRange = 100;
                 break;
             case "Hard"
                 minOfRange = 1;
@@ -90,77 +86,116 @@ public class Main
     }
 
 
-    public static boolean getInput()
-    {
+    //getInput without parameters gets a yes or no response  from the user,
+    // and keeps asking them until they give one
+    public static boolean getInput() {
+        Scanner scn_kkb = new Scanner(System.in);//make a scanner
+        String input = kkb.nextString();
+        if (Character.toLowerCase(input.charAt(0)) == 'y')//if they typed yes
+        {
+            return true;
+        } else if (Character.toLowerCase(input.charAt(0)) == 'n')//if they typed no
+        {
+            return false;
+        } else//if they gave bad input
+        {
+            System.out.println("Please type Y or N.")
+            return getInput();
+        }
 
     }
 
-    public static int getInput(int minRange, int maxRange)
-    {
-
-    }
-
-    public static String getInput(String option1, String option2, String option3)
-    {
-
-    }
-
-    public static void gameLoop()
-    {
-        do
+    //get input with parameters minrange and maxrange gets an integer in that range from the user
+    // and keeps asking them until they give one
+    public static int getInput(int minRange, int maxRange) {
+        Scanner scn_kkb = new Scanner(System.in);//make a scanner
+        String input = kkb.nextString();
+        int returnValue;
+        try {
+            returnValue = Integer.parseInt(input);
+            if (returnValue <= maxRange  &&  returnValue >= minRange)
             {
-                totalGames++;
+                return returnValue;
+            }
+        }
+        catch (NumberFormatException e) {
+            System.out.println("Please type an integer");
+            return getInput(minRange, maxRange);
+        }
+
+        System.out.println("Please type an number between " + minRange + " and " + maxRange);
+        return getInput(minRange, maxRange);
+    }
+
+    //get input with 3 string parameters gets one of those strings as a response from the user
+    // and keeps asking them until they give one
+    public static String getInput(String option1, String option2, String option3) {
+        Scanner scn_kkb = new Scanner(System.in);//make a scanner
+        String input = kkb.nextString();
+        switch (String.toLowerCase(input))
+    {
+        case option1:
+
+            break;
+        case option2:
+                break;
+        case option3:
+            break;
+        default:
+            System.out.println("Please type " + option1 + ", " + option2 + " or " + option3);
+            return getInput(option1,option2,option3);
+    }
+
+    }
+
+    public static void gameLoop() {
+        do {
+            totalGames++;
             System.out.println("\nOkay, I'm thinking of a number between " + minOfRange + " and " + maxOfRange + "...");
             Random rGen = new Random();
-            int randomNumber = (int)(rGen.nextDouble()*(maxOfRange+1));
-            doGuess(minOfRange,maxOfRange,guessesAllowed,0, randomNumber);
+            int randomNumber = (int) (rGen.nextDouble() * (maxOfRange + 1));
+            doGuess(minOfRange, maxOfRange, guessesAllowed, 0, randomNumber);
             System.out.println("Want to play again?\n[Y/N]");
             boolean playAgain = getInput();
-            if (playAgain)
-            {
+            if (playAgain) {
                 System.out.println("Shall we change the difficulty this round?\n[Y/N]");
                 if (getInput())//If they want to change difficulty
                 {
                     setupDifficulty();
                 }
             }
-        }while (playAgain)
+        } while (playAgain)
 
     }
 
-    public static void doGuess(int minRange, int maxRange, int guessesLeft, int guessesMade, int rightNumb)
-    {
+    public static void doGuess(int minRange, int maxRange, int guessesLeft, int guessesMade, int rightNumb) {
         guessesLeft--;
         guessesMade++;
-        if (guessesLeft!=0) {//if we have guesses left
+        if (guessesLeft != 0) {//if we have guesses left
             System.out.println("Guess:");
-            int thisGuess = getInput(minRange,maxRange);
+            int thisGuess = getInput(minRange, maxRange);
 
             if (thisGuess < rightNumb)//if guess is too low
             {
-                System.out.println("Too Low!");
-                doGuess(minRange,maxRange,guessesLeft,guessesMade,rightNumb);//guess again!
-            }
-            else if (thisGuess > rightNumb)//if guess is too high!
+                System.out.println(thisGuess + " is Too Low!");
+                doGuess(minRange, maxRange, guessesLeft, guessesMade, rightNumb);//guess again!
+            } else if (thisGuess > rightNumb)//if guess is too high!
             {
-                System.out.println("Too High!");
-                doGuess(minRange,maxRange,guessesLeft,guessesMade,rightNumb);//guess again!
-            }
-            else if (thisGuess == rightNumb)//if correct guess was made
+                System.out.println(thisGuess + " is Too High!");
+                doGuess(minRange, maxRange, guessesLeft, guessesMade, rightNumb);//guess again!
+            } else if (thisGuess == rightNumb)//if correct guess was made
             {
-                totalGuesses+=guessesMade;//add to the total guess sum
+                totalGuesses += guessesMade;//add to the total guess sum
                 System.out.println("That's right! " + rightNumb + " is the correct number!");
                 System.out.println("It took you " + guessesMade + " guesses to get it.");
-                if (guessesLeft < bestGuesses || bestGuesses == -1)
-                {
+                if (guessesLeft < bestGuesses || bestGuesses == -1) {
                     bestGuesses = guessesMade;
                     System.out.println("New Record: " + bestGuesses + " guesses!");
                 }
             }
 
-        }
-        else//if user ran out of guesses...
-            {
+        } else//if user ran out of guesses...
+        {
             System.out.println("You've run out of guesses! The correct number was " + rightNumb + ".");
             totalGuesses += guessesMade; //add to the total guess sum
         }
