@@ -1,6 +1,7 @@
 // Students: Alex Wesolowki, Chantel Drwg, Sean Yanik
 // Class: CS 145 A with Mr. Criss
 // Lab 1
+// File Name: Main.java
 /*
 This program invites the user to play a guessing game. The computer picks a random number
 from a range and the user tries to guess it, while being told if their guesses are too low
@@ -50,7 +51,7 @@ public class Main {
             if (bestGuesses != -1) {//if the player won at least one game
                 System.out.println("Your best game took only " + bestGuesses + " guesses");
             } else {
-                System.out.println("You never won a game, so there isn't a best guesses number.")
+                System.out.println("You never won a game, so there isn't a best guesses number.");
             }
 
         }
@@ -61,17 +62,17 @@ public class Main {
     public static void setupDifficulty()//asks user what difficulty they want to play on
     {
         System.out.println("\nWould you like to play with a guessing range that is Easy, Medium, or Hard?");
-        String difficultySelection = getInput("Easy", "Medium", "Hard");
+        String difficultySelection = getInput("easy", "medium", "hard");
         switch (difficultySelection) {
-            case "Easy":
+            case "easy":
                 minOfRange = 1;
                 maxOfRange = 50;
                 break;
-            case "Medium"
+            case "medium":
                 minOfRange = 1;
                 maxOfRange = 100;
                 break;
-            case "Hard"
+            case "hard":
                 minOfRange = 1;
                 maxOfRange = 250;
                 break;
@@ -79,7 +80,7 @@ public class Main {
 
         System.out.println("\nShould we have limited guesses?\n[Y/N]");
         if (getInput()) { //if they say yes
-            System.out.println("Shall we play with 12 guesses, 10 guesses, or 6?")
+            System.out.println("Shall we play with 12 guesses, 10 guesses, or 6?");
             String guessAllowedSelection = getInput("12", "10", "6");
             guessesAllowed = Integer.parseInt(guessAllowedSelection);
         }
@@ -90,7 +91,7 @@ public class Main {
     // and keeps asking them until they give one
     public static boolean getInput() {
         Scanner scn_kkb = new Scanner(System.in);//make a scanner
-        String input = kkb.nextString();
+        String input = scn_kkb.next();
         if (Character.toLowerCase(input.charAt(0)) == 'y')//if they typed yes
         {
             return true;
@@ -99,7 +100,7 @@ public class Main {
             return false;
         } else//if they gave bad input
         {
-            System.out.println("Please type Y or N.")
+            System.out.println("Please type Y or N.");
             return getInput();
         }
 
@@ -109,7 +110,7 @@ public class Main {
     // and keeps asking them until they give one
     public static int getInput(int minRange, int maxRange) {
         Scanner scn_kkb = new Scanner(System.in);//make a scanner
-        String input = kkb.nextString();
+        String input = scn_kkb.next();
         int returnValue;
         try {
             returnValue = Integer.parseInt(input);
@@ -131,24 +132,27 @@ public class Main {
     // and keeps asking them until they give one
     public static String getInput(String option1, String option2, String option3) {
         Scanner scn_kkb = new Scanner(System.in);//make a scanner
-        String input = kkb.nextString();
-        switch (String.toLowerCase(input))
-    {
-        case option1:
-
-            break;
-        case option2:
-                break;
-        case option3:
-            break;
-        default:
+        String input = scn_kkb.next();//get input from user
+        input = input.toLowerCase();//convert to lower case
+        if (input.equals(option1))
+        {
+            return option1;
+        }else if (input.equals(option2))
+        {
+            return option2;
+        }else if (input.equals(option3))
+        {
+            return option3;
+        }else {
             System.out.println("Please type " + option1 + ", " + option2 + " or " + option3);
-            return getInput(option1,option2,option3);
-    }
+            return getInput(option1, option2, option3);
+        }
 
     }
 
+    //plays the guessing game
     public static void gameLoop() {
+        boolean playAgain = true;
         do {
             totalGames++;
             System.out.println("\nOkay, I'm thinking of a number between " + minOfRange + " and " + maxOfRange + "...");
@@ -156,7 +160,7 @@ public class Main {
             int randomNumber = (int) (rGen.nextDouble() * (maxOfRange + 1));
             doGuess(minOfRange, maxOfRange, guessesAllowed, 0, randomNumber);
             System.out.println("Want to play again?\n[Y/N]");
-            boolean playAgain = getInput();
+            playAgain = getInput();
             if (playAgain) {
                 System.out.println("Shall we change the difficulty this round?\n[Y/N]");
                 if (getInput())//If they want to change difficulty
@@ -164,10 +168,11 @@ public class Main {
                     setupDifficulty();
                 }
             }
-        } while (playAgain)
+        } while (playAgain);
 
     }
 
+    //this method makes the player guess until they win
     public static void doGuess(int minRange, int maxRange, int guessesLeft, int guessesMade, int rightNumb) {
         guessesLeft--;
         guessesMade++;
@@ -183,7 +188,7 @@ public class Main {
             {
                 System.out.println(thisGuess + " is Too High!");
                 doGuess(minRange, maxRange, guessesLeft, guessesMade, rightNumb);//guess again!
-            } else if (thisGuess == rightNumb)//if correct guess was made
+            } else //if correct guess was made
             {
                 totalGuesses += guessesMade;//add to the total guess sum
                 System.out.println("That's right! " + rightNumb + " is the correct number!");
