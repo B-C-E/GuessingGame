@@ -9,6 +9,7 @@ Includes adjustable difficulty
  */
 
 package com.ourGroup;
+import java.util.*;//using the random class
 
 public class Main
 {
@@ -47,7 +48,13 @@ public class Main
             System.out.println("Total Number of Guesses: " + totalGuesses);
             System.out.println("Total Number of Games: " + totalGames);
             System.out.println("Average Guesses per game: " + ((totalGuesses * 10) / totalGames) / 10.0);
-            System.out.println("Your best game took only " + bestGuesses + " guesses");
+            if (bestGuesses != -1) {//if the player won at least one game
+                System.out.println("Your best game took only " + bestGuesses + " guesses");
+            }
+            else
+                {
+                System.out.println("You never won a game, so there isn't a best guesses number.")
+            }
 
         }
 
@@ -69,8 +76,8 @@ public class Main
             maxOfRange = 100;
                 break;
             case "Hard"
-                minOfRange = -100;
-                maxOfRange = 100;
+                minOfRange = 1;
+                maxOfRange = 250;
                 break;
         }
 
@@ -100,14 +107,63 @@ public class Main
 
     public static void gameLoop()
     {
-        System.out.println("Okay, I'm thinking of a number between " + minOfRange + " and " + maxOfRange + "...");
-
+        do
+            {
+                totalGames++;
+            System.out.println("\nOkay, I'm thinking of a number between " + minOfRange + " and " + maxOfRange + "...");
+            Random rGen = new Random();
+            int randomNumber = (int)(rGen.nextDouble()*(maxOfRange+1));
+            doGuess(minOfRange,maxOfRange,guessesAllowed,0, randomNumber);
+            System.out.println("Want to play again?\n[Y/N]");
+            boolean playAgain = getInput();
+            if (playAgain)
+            {
+                System.out.println("Shall we change the difficulty this round?\n[Y/N]");
+                if (getInput())//If they want to change difficulty
+                {
+                    setupDifficulty();
+                }
+            }
+        }while (playAgain)
 
     }
 
-    public static void doGuess(int minRange, int maxRange, int guessesLeft, int guessesMade)
+    public static void doGuess(int minRange, int maxRange, int guessesLeft, int guessesMade, int rightNumb)
     {
+        guessesLeft--;
+        guessesMade++;
+        if (guessesLeft!=0) {//if we have guesses left
+            System.out.println("Guess:");
+            int thisGuess = getInput(minRange,maxRange);
 
+            if (thisGuess < rightNumb)//if guess is too low
+            {
+                System.out.println("Too Low!");
+                doGuess(minRange,maxRange,guessesLeft,guessesMade,rightNumb);//guess again!
+            }
+            else if (thisGuess > rightNumb)//if guess is too high!
+            {
+                System.out.println("Too High!");
+                doGuess(minRange,maxRange,guessesLeft,guessesMade,rightNumb);//guess again!
+            }
+            else if (thisGuess == rightNumb)//if correct guess was made
+            {
+                totalGuesses+=guessesMade;//add to the total guess sum
+                System.out.println("That's right! " + rightNumb + " is the correct number!");
+                System.out.println("It took you " + guessesMade + " guesses to get it.");
+                if (guessesLeft < bestGuesses || bestGuesses == -1)
+                {
+                    bestGuesses = guessesMade;
+                    System.out.println("New Record: " + bestGuesses + " guesses!");
+                }
+            }
+
+        }
+        else//if user ran out of guesses...
+            {
+            System.out.println("You've run out of guesses! The correct number was " + rightNumb + ".");
+            totalGuesses += guessesMade; //add to the total guess sum
+        }
     }
 
 
