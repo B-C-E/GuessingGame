@@ -13,9 +13,35 @@ package com.ourGroup;
 public class Main
 {
 
+    //Global Variables:
+    public static int totalGuesses;
+    public static int totalGames;
+    public static int bestGuesses;//The fewest guesses any game took
+    public static int minOfRange;//The minimum number in guessing range
+    public static int maxOfRange;//The maximum number in guessing range
+
+
+
+    //runs guessing game, sets up difficulty, displays stats when done
     public static void main(String[] args)
     {
-	// write your code here
+        System.out.println("Hello! Would you like to play the guessing game?");
+        System.out.println("[Y/N]");
+
+        if (getInput())//If the user wants to play the game
+        {
+            setupDifficulty();
+            gameLoop();
+
+            System.out.println("Today's Statistics:");
+            System.out.println("Total Number of Guesses: " + totalGuesses);
+            System.out.println("Total Number of Games: " + totalGames);
+            System.out.println("Average Guesses per game: " + ((totalGuesses*10)/totalGames)/10.0);
+            System.out.println("Your best game took only " + bestGuesses + " guesses");
+
+        }
+
+        System.out.println("Have a nice day!");
     }
 
     public static void setupDifficulty()
