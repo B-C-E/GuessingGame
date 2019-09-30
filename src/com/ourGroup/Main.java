@@ -19,6 +19,7 @@ public class Main
     public static int bestGuesses;//The fewest guesses any game took
     public static int minOfRange;//The minimum number in guessing range
     public static int maxOfRange;//The maximum number in guessing range
+    public static int guessesAllowed; //how many guesses can the player make?
 
 
     //runs guessing game, sets up difficulty, displays stats when done
@@ -37,6 +38,7 @@ public class Main
             totalGuesses = 0;
             totalGames = 0;
             bestGuesses = -1;//no best guess yet, so -1
+            guessesAllowed = -1;//unlimited guesses is default
 
             setupDifficulty();
             gameLoop();
@@ -49,23 +51,35 @@ public class Main
 
         }
 
-        System.out.println("Have a nice day!");
+        System.out.println("Have a nice day!");//exit message
     }
 
-    public static void setupDifficulty()
+    public static void setupDifficulty()//asks user what difficulty they want to play on
     {
         System.out.println("\nWould you like to play with a guessing range that is Easy, Medium, or Hard?");
         String difficultySelection = getInput("Easy", "Medium", "Hard");
         switch(difficultySelection)
         {
             case "Easy":
+                minOfRange = 1;
+                maxOfRange = 50;
                 break;
             case "Medium"
+                minOfRange = 1;
+            maxOfRange = 100;
                 break;
             case "Hard"
+                minOfRange = -100;
+                maxOfRange = 100;
                 break;
         }
 
+        System.out.println("\nShould we have limited guesses?\n[Y/N]");
+        if (getInput()) { //if they say yes
+            System.out.println("Shall we play with 12 guesses, 10 guesses, or 6?")
+            String guessAllowedSelection = getInput("12", "10", "6");
+            guessesAllowed = Integer.parseInt(guessAllowedSelection);
+        }
     }
 
 
@@ -86,6 +100,8 @@ public class Main
 
     public static void gameLoop()
     {
+        System.out.println("Okay, I'm thinking of a number between " + minOfRange + " and " + maxOfRange + "...");
+
 
     }
 
