@@ -193,7 +193,7 @@ public class Main {
                 totalGuesses += guessesMade;//add to the total guess sum
                 System.out.println("That's right! " + rightNumb + " is the correct number!");
                 System.out.println("It took you " + guessesMade + " guesses to get it.");
-                if (guessesLeft < bestGuesses || bestGuesses == -1) {
+                if (guessesMade < bestGuesses || bestGuesses == -1) {
                     bestGuesses = guessesMade;
                     System.out.println("New Record: " + bestGuesses + " guesses!");
                 }
