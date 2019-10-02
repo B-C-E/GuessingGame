@@ -173,7 +173,7 @@ public class Main
             totalGames++;
             System.out.println("\nOkay, I'm thinking of a number between " + minOfRange + " and " + maxOfRange + "...");
             Random rGen = new Random();//new random generator
-            int randomNumber = (int) (rGen.nextDouble() * (maxOfRange + 1));//get our random number
+            int randomNumber = (int) ((rGen.nextDouble() * maxOfRange) + 1);//get our random number
             doGuess(minOfRange, maxOfRange, guessesAllowed, 0, randomNumber);//make the player guess!
             System.out.println("Want to play again?\n[Y/N]");
             playAgain = getInput();
@@ -210,8 +210,16 @@ public class Main
             } else //if correct guess was made
             {
                 totalGuesses += guessesMade;//add guesses this round to the total guess sum
+
                 System.out.println("That's right! " + rightNumb + " is the correct number!");
-                System.out.println("It took you " + guessesMade + " guesses to get it.");
+                if (guessesMade == 1) //if user guessed right on the first try
+                {
+                    System.out.println("You got it first try, too!");
+                } else//if user didn't guess right on the first try
+                {
+                    System.out.println("It took you " + guessesMade + " guesses to get it.");
+                }//end of if the user guessed right on the first try or not
+
                 if (guessesMade < bestGuesses || bestGuesses == -1)//if user set a new record for guesses, or, if
                 {                                                 //bestguesses = -1, because its the first round
                     bestGuesses = guessesMade;
