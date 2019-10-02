@@ -91,7 +91,7 @@ public class Main
         {
             System.out.println("Shall we play with 12 guesses, 10 guesses, or 6?");
             String guessAllowedSelection = getInput("12", "10", "6");//the user must enter 12,10, or 6
-            guessesAllowed = Integer.parseInt(guessAllowedSelection);
+            guessesAllowed = 1 + Integer.parseInt(guessAllowedSelection);
         }
     }//end of setupDifficulty
 
