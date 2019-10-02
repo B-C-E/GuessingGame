@@ -1,4 +1,4 @@
-// Students: Alex Wesolowki, Chantel Drwg, Sean Yanik
+// Students: Alex Wesolowski, Chantel Blaidd-Drwg, Sean Yanik
 // Class: CS 145 A with Mr. Criss
 // Lab 1
 // File Name: Main.java
